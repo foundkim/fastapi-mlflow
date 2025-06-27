@@ -5,6 +5,7 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: Global
     steps:
     - uses: actions/checkout@v3
     - name: Install Docker
