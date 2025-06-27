@@ -1,0 +1,5 @@
+
+.env
+Pipefile
+Pipefile.lock
+required.txt

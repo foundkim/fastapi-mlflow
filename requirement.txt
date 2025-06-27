@@ -1,0 +1,7 @@
+fastapi==0.115.13
+pydantic==2.11.7
+pydantic-settings==2.10.1
+scikit-learn==1.7.0
+mlflow==3.1.1
+uvicorn==0.34.3
+pydantic[email]==2.11.7

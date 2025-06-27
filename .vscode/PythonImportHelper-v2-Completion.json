@@ -1,0 +1,274 @@
+[
+    {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "InferenceIn",
+        "importPath": "schemas",
+        "description": "schemas",
+        "isExtraImport": true,
+        "detail": "schemas",
+        "documentation": {}
+    },
+    {
+        "label": "InferenceOut",
+        "importPath": "schemas",
+        "description": "schemas",
+        "isExtraImport": true,
+        "detail": "schemas",
+        "documentation": {}
+    },
+    {
+        "label": "InferenceIn",
+        "importPath": "schemas",
+        "description": "schemas",
+        "isExtraImport": true,
+        "detail": "schemas",
+        "documentation": {}
+    },
+    {
+        "label": "make_prediction",
+        "importPath": "services ",
+        "description": "services ",
+        "isExtraImport": true,
+        "detail": "services ",
+        "documentation": {}
+    },
+    {
+        "label": "BaseSettings",
+        "importPath": "pydantic_settings",
+        "description": "pydantic_settings",
+        "isExtraImport": true,
+        "detail": "pydantic_settings",
+        "documentation": {}
+    },
+    {
+        "label": "SettingsConfigDict",
+        "importPath": "pydantic_settings",
+        "description": "pydantic_settings",
+        "isExtraImport": true,
+        "detail": "pydantic_settings",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "EmailStr",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "mlflow",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "mlflow",
+        "description": "mlflow",
+        "detail": "mlflow",
+        "documentation": {}
+    },
+    {
+        "label": "config",
+        "importPath": "core",
+        "description": "core",
+        "isExtraImport": true,
+        "detail": "core",
+        "documentation": {}
+    },
+    {
+        "label": "config",
+        "importPath": "core",
+        "description": "core",
+        "isExtraImport": true,
+        "detail": "core",
+        "documentation": {}
+    },
+    {
+        "label": "uvicorn",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "uvicorn",
+        "description": "uvicorn",
+        "detail": "uvicorn",
+        "documentation": {}
+    },
+    {
+        "label": "inference_router",
+        "importPath": "api",
+        "description": "api",
+        "isExtraImport": true,
+        "detail": "api",
+        "documentation": {}
+    },
+    {
+        "label": "home_router",
+        "importPath": "api",
+        "description": "api",
+        "isExtraImport": true,
+        "detail": "api",
+        "documentation": {}
+    },
+    {
+        "label": "inference_router",
+        "kind": 5,
+        "importPath": "api.inference",
+        "description": "api.inference",
+        "peekOfCode": "inference_router = APIRouter(prefix=\"/inference\", tags=[\"Inference Operations\"])\n@inference_router.post(\"/predict\", response_model=InferenceOut)\nasync def predict(inference_data: InferenceIn) -> InferenceOut:\n    \"\"\"Endpoint for making predictions based on input data.\"\"\"\n    # Here you would typically call your model's prediction method\n    prediction = make_prediction(inference_data)\n    return InferenceOut(species=prediction)\n@inference_router.post(\"/bulk-predict\", response_model=list[InferenceOut])\nasync def bulk_predict(inference_data: list[InferenceIn]) -> list[InferenceOut]:\n    \"\"\"Endpoint for making bulk predictions based on input data.\"\"\"",
+        "detail": "api.inference",
+        "documentation": {}
+    },
+    {
+        "label": "home_router",
+        "kind": 5,
+        "importPath": "api.root",
+        "description": "api.root",
+        "peekOfCode": "home_router = APIRouter(prefix=\"\", tags=[\"Home Page\"])\n@home_router.get(\"/\")\nasync def read_root() -> dict:\n    \"\"\"Root endpoint for the API.\"\"\"\n    return {\"message\": \"Welcome to the FastAPI MFlow application!\"}",
+        "detail": "api.root",
+        "documentation": {}
+    },
+    {
+        "label": "Config",
+        "kind": 6,
+        "importPath": "core.config",
+        "description": "core.config",
+        "peekOfCode": "class Config(BaseSettings):\n    \"\"\"Configuration settings for the FastAPI application.\"\"\"\n    MLFLOW_TRACKING_URI: str = \"http://localhost:5000\"\n    MLFLOW_MODEL_URI: str\n    APP_NAME: str = \"FastAPI MFlow Application\"\n    APP_VERSION: str = \"1.0.0\"\n    APP_DESCRIPTION: str = \"A FastAPI application for MFlow integration\"\n    model_config = SettingsConfigDict(\n        env_file=\".env\",\n        env_file_encoding=\"utf-8\",",
+        "detail": "core.config",
+        "documentation": {}
+    },
+    {
+        "label": "config",
+        "kind": 5,
+        "importPath": "core.config",
+        "description": "core.config",
+        "peekOfCode": "config = Config()",
+        "detail": "core.config",
+        "documentation": {}
+    },
+    {
+        "label": "InferenceIn",
+        "kind": 6,
+        "importPath": "schemas.inference",
+        "description": "schemas.inference",
+        "peekOfCode": "class InferenceIn(BaseModel):\n    \"\"\"Schema for inference input data.\"\"\"\n    sepal_length: float\n    sepal_width: float\n    petal_length: float\n    petal_width: float\nclass InferenceOut(BaseModel):\n    \"\"\"Schema for inference output data.\"\"\"\n    species: str",
+        "detail": "schemas.inference",
+        "documentation": {}
+    },
+    {
+        "label": "InferenceOut",
+        "kind": 6,
+        "importPath": "schemas.inference",
+        "description": "schemas.inference",
+        "peekOfCode": "class InferenceOut(BaseModel):\n    \"\"\"Schema for inference output data.\"\"\"\n    species: str",
+        "detail": "schemas.inference",
+        "documentation": {}
+    },
+    {
+        "label": "UserBase",
+        "kind": 6,
+        "importPath": "schemas.user",
+        "description": "schemas.user",
+        "peekOfCode": "class UserBase(BaseModel):\n    \"\"\"Base schema for user data.\"\"\"\n    username: str\n    email: EmailStr\n    full_name: str | None = None\nclass UserIn(UserBase):\n    \"\"\"Base schema for user data.\"\"\"\n    password: str\nclass UserUpdate(UserBase):\n    \"\"\"Schema for updating user data.\"\"\"",
+        "detail": "schemas.user",
+        "documentation": {}
+    },
+    {
+        "label": "UserIn",
+        "kind": 6,
+        "importPath": "schemas.user",
+        "description": "schemas.user",
+        "peekOfCode": "class UserIn(UserBase):\n    \"\"\"Base schema for user data.\"\"\"\n    password: str\nclass UserUpdate(UserBase):\n    \"\"\"Schema for updating user data.\"\"\"\n    username: str | None = None\n    email: EmailStr | None = None\n    password: str | None = None\n    full_name: str | None = None    \nclass UserOut(UserBase):",
+        "detail": "schemas.user",
+        "documentation": {}
+    },
+    {
+        "label": "UserUpdate",
+        "kind": 6,
+        "importPath": "schemas.user",
+        "description": "schemas.user",
+        "peekOfCode": "class UserUpdate(UserBase):\n    \"\"\"Schema for updating user data.\"\"\"\n    username: str | None = None\n    email: EmailStr | None = None\n    password: str | None = None\n    full_name: str | None = None    \nclass UserOut(UserBase):\n    \"\"\"Schema for user output data.\"\"\"\n    id: int",
+        "detail": "schemas.user",
+        "documentation": {}
+    },
+    {
+        "label": "UserOut",
+        "kind": 6,
+        "importPath": "schemas.user",
+        "description": "schemas.user",
+        "peekOfCode": "class UserOut(UserBase):\n    \"\"\"Schema for user output data.\"\"\"\n    id: int",
+        "detail": "schemas.user",
+        "documentation": {}
+    },
+    {
+        "label": "make_prediction",
+        "kind": 2,
+        "importPath": "services.inference",
+        "description": "services.inference",
+        "peekOfCode": "def make_prediction(inference_data: InferenceIn):\n    \"\"\"Predict the species based on input data.\"\"\"\n    input_df = pd.DataFrame(inference_data.model_dump(mode=\"python\"))\n    input_df = input_df.rename(\n        columns={\n            # For compatibility with the model's expected input\n            # Adam\n            \"sepal_length\": \"sepal length(cm)\",\n            # Paul\n            \"sepal_width\": \"sepal.width\",",
+        "detail": "services.inference",
+        "documentation": {}
+    },
+    {
+        "label": "get_model",
+        "kind": 2,
+        "importPath": "services.model",
+        "description": "services.model",
+        "peekOfCode": "def get_model():\n    \"\"\"\n    Load a model from MLFlow.\n    \"\"\"\n    return mlflow.pyfunc.load_model(model_uri=config.MLFLOW_MODEL_URI)",
+        "detail": "services.model",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "app = FastAPI(\n    title=config.APP_NAME,\n    description=config.APP_DESCRIPTION,\n    version=config.APP_VERSION,\n)\napp.include_router(inference_router)\napp.include_router(home_router)\nif __name__ == \"__main__\":\n    # Run the application using uvicorn\n    uvicorn.run(",
+        "detail": "main",
+        "documentation": {}
+    }
+]
