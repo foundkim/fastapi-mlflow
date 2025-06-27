@@ -1,4 +1,4 @@
-name: Exemple CI
+name: Build FastAPI Docker Image
 
 on: [push]
 
@@ -7,5 +7,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Run tests
-      run: echo "Lancement des tests..."
+    - name: Install Docker
+      run: sudo apt-get install -y docker.io
+    - name: Build Docker Image
+      run: docker build -t ${{vars.DOCKER_USERNAME}}/fastapi-mlflow:ci .
+
+    - name: Login to Docker Hub
+      run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u ${{vars.DOCKER_USERNAME}} --password-stdin
+
+     
+    - name: Push Docker Image
+      run: docker push ${{vars.DOCKER_USERNAME}}/fastapi-mlflow:ci  
+
+
+
+
