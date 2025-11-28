@@ -6,13 +6,13 @@ from pydantic import BaseModel
 class InferenceIn(BaseModel):
     """Schema for inference input data."""
 
-    sepal_length: float
+    sepal_lenght: float
     sepal_width: float
-    petal_length: float
+    petal_lenght: float
     petal_width: float
 
 
-class InferenceOut(BaseModel):
+class InferenceOut(InferenceIn):
     """Schema for inference output data."""
 
     species: str

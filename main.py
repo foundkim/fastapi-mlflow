@@ -3,6 +3,10 @@
 from fastapi import FastAPI
 import uvicorn
 
+from core import configure_logging
+
+configure_logging()
+
 
 from api import inference_router, home_router
 

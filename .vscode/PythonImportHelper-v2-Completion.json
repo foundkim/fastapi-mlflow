@@ -48,6 +48,14 @@
         "documentation": {}
     },
     {
+        "label": "InferenceOut",
+        "importPath": "schemas",
+        "description": "schemas",
+        "isExtraImport": true,
+        "detail": "schemas",
+        "documentation": {}
+    },
+    {
         "label": "make_prediction",
         "importPath": "services ",
         "description": "services ",
@@ -69,6 +77,33 @@
         "description": "pydantic_settings",
         "isExtraImport": true,
         "detail": "pydantic_settings",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "glob",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "glob",
+        "description": "glob",
+        "detail": "glob",
+        "documentation": {}
+    },
+    {
+        "label": "logging",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
         "documentation": {}
     },
     {
@@ -105,6 +140,14 @@
         "documentation": {}
     },
     {
+        "label": "logger",
+        "importPath": "core.log",
+        "description": "core.log",
+        "isExtraImport": true,
+        "detail": "core.log",
+        "documentation": {}
+    },
+    {
         "label": "mlflow",
         "kind": 6,
         "isExtraImport": true,
@@ -115,6 +158,14 @@
     },
     {
         "label": "config",
+        "importPath": "core",
+        "description": "core",
+        "isExtraImport": true,
+        "detail": "core",
+        "documentation": {}
+    },
+    {
+        "label": "configure_logging",
         "importPath": "core",
         "description": "core",
         "isExtraImport": true,
@@ -159,7 +210,7 @@
         "kind": 5,
         "importPath": "api.inference",
         "description": "api.inference",
-        "peekOfCode": "inference_router = APIRouter(prefix=\"/inference\", tags=[\"Inference Operations\"])\n@inference_router.post(\"/predict\", response_model=InferenceOut)\nasync def predict(inference_data: InferenceIn) -> InferenceOut:\n    \"\"\"Endpoint for making predictions based on input data.\"\"\"\n    # Here you would typically call your model's prediction method\n    prediction = make_prediction(inference_data)\n    return InferenceOut(species=prediction)\n@inference_router.post(\"/bulk-predict\", response_model=list[InferenceOut])\nasync def bulk_predict(inference_data: list[InferenceIn]) -> list[InferenceOut]:\n    \"\"\"Endpoint for making bulk predictions based on input data.\"\"\"",
+        "peekOfCode": "inference_router = APIRouter(prefix=\"/inference\", tags=[\"Inference Operations\"])\n@inference_router.post(\"/predict\", response_model=InferenceOut)\nasync def predict(inference_data: InferenceIn) -> InferenceOut:\n    \"\"\"Endpoint for making predictions based on input data.\"\"\"\n    # Here you would typically call your model's prediction method\n    prediction = make_prediction(inference_data)\n    return prediction\n@inference_router.post(\"/bulk-predict\", response_model=list[InferenceOut])\nasync def bulk_predict(inference_data: list[InferenceIn]) -> list[InferenceOut]:\n    \"\"\"Endpoint for making bulk predictions based on input data.\"\"\"",
         "detail": "api.inference",
         "documentation": {}
     },
@@ -191,11 +242,29 @@
         "documentation": {}
     },
     {
+        "label": "configure_logging",
+        "kind": 2,
+        "importPath": "core.log",
+        "description": "core.log",
+        "peekOfCode": "def configure_logging():\n    \"\"\"Configure logging for whole app\"\"\"\n    app_name = config.APP_NAME.replace(\" \", \"-\").lower()\n    log_level = config.LOG_LEVEL\n    log_file_pattern = f\"{app_name}_*.log\"  # Pattern for log files\n    log_dir = \"logs\"  # Directory to store logs\n    # Create the log directory if it doesn't exist\n    os.makedirs(log_dir, exist_ok=True)\n    # Find the highest existing log number to increment from\n    existing_logs = glob.glob(os.path.join(log_dir, log_file_pattern))",
+        "detail": "core.log",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "core.log",
+        "description": "core.log",
+        "peekOfCode": "logger = logging.getLogger(__name__)",
+        "detail": "core.log",
+        "documentation": {}
+    },
+    {
         "label": "InferenceIn",
         "kind": 6,
         "importPath": "schemas.inference",
         "description": "schemas.inference",
-        "peekOfCode": "class InferenceIn(BaseModel):\n    \"\"\"Schema for inference input data.\"\"\"\n    sepal_length: float\n    sepal_width: float\n    petal_length: float\n    petal_width: float\nclass InferenceOut(BaseModel):\n    \"\"\"Schema for inference output data.\"\"\"\n    species: str",
+        "peekOfCode": "class InferenceIn(BaseModel):\n    \"\"\"Schema for inference input data.\"\"\"\n    sepal_lenght: float\n    sepal_width: float\n    petal_lenght: float\n    petal_width: float\nclass InferenceOut(InferenceIn):\n    \"\"\"Schema for inference output data.\"\"\"\n    species: str",
         "detail": "schemas.inference",
         "documentation": {}
     },
@@ -204,7 +273,7 @@
         "kind": 6,
         "importPath": "schemas.inference",
         "description": "schemas.inference",
-        "peekOfCode": "class InferenceOut(BaseModel):\n    \"\"\"Schema for inference output data.\"\"\"\n    species: str",
+        "peekOfCode": "class InferenceOut(InferenceIn):\n    \"\"\"Schema for inference output data.\"\"\"\n    species: str",
         "detail": "schemas.inference",
         "documentation": {}
     },
@@ -249,7 +318,16 @@
         "kind": 2,
         "importPath": "services.inference",
         "description": "services.inference",
-        "peekOfCode": "def make_prediction(inference_data: InferenceIn):\n    \"\"\"Predict the species based on input data.\"\"\"\n    input_df = pd.DataFrame(inference_data.model_dump(mode=\"python\"))\n    input_df = input_df.rename(\n        columns={\n            # For compatibility with the model's expected input\n            # Adam\n            \"sepal_length\": \"sepal length(cm)\",\n            # Paul\n            \"sepal_width\": \"sepal.width\",",
+        "peekOfCode": "def make_prediction(inference_data: InferenceIn):\n    \"\"\"Predict the species based on input data.\"\"\"\n    input_df = pd.DataFrame([inference_data.model_dump(mode=\"python\")])\n    # input_df = input_df.rename(\n    #     columns={\n    #         # For compatibility with the model's expected input\n    #         # Adam\n    #         \"sepal_length\": \"sepal length(cm)\",\n    #         # Paul\n    #         \"sepal_width\": \"sepal.width\",",
+        "detail": "services.inference",
+        "documentation": {}
+    },
+    {
+        "label": "SPECIES",
+        "kind": 5,
+        "importPath": "services.inference",
+        "description": "services.inference",
+        "peekOfCode": "SPECIES = [\"setosa\", \"versicolor\", \"virginica\"]\ndef make_prediction(inference_data: InferenceIn):\n    \"\"\"Predict the species based on input data.\"\"\"\n    input_df = pd.DataFrame([inference_data.model_dump(mode=\"python\")])\n    # input_df = input_df.rename(\n    #     columns={\n    #         # For compatibility with the model's expected input\n    #         # Adam\n    #         \"sepal_length\": \"sepal length(cm)\",\n    #         # Paul",
         "detail": "services.inference",
         "documentation": {}
     },
@@ -258,7 +336,7 @@
         "kind": 2,
         "importPath": "services.model",
         "description": "services.model",
-        "peekOfCode": "def get_model():\n    \"\"\"\n    Load a model from MLFlow.\n    \"\"\"\n    return mlflow.pyfunc.load_model(model_uri=config.MLFLOW_MODEL_URI)",
+        "peekOfCode": "def get_model():\n    \"\"\"\n    Load a model from MLFlow.\n    \"\"\"\n    mlflow.set_tracking_uri(config.MLFLOW_TRACKING_URI)\n    return mlflow.pyfunc.load_model(model_uri=config.MLFLOW_MODEL_URI)",
         "detail": "services.model",
         "documentation": {}
     },

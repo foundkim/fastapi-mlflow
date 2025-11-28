@@ -17,7 +17,7 @@ async def predict(inference_data: InferenceIn) -> InferenceOut:
     prediction = make_prediction(inference_data)
     
 
-    return InferenceOut(species=prediction)
+    return prediction
 
 
 @inference_router.post("/bulk-predict", response_model=list[InferenceOut])

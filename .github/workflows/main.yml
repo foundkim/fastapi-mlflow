@@ -34,6 +34,20 @@ jobs:
     - name: Push Docker Image
       run: docker push ${{vars.DOCKER_USERNAME}}/fastapi-mlflow:ci  
 
+  build-with-docker-action: 
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: true
+        tags: ${{vars.DOCKER_USERNAME}}/fastapi-mlflow:ci-docker-action
+      env:
+        DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}       
+
+
 
 
 

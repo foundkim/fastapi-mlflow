@@ -18,5 +18,7 @@ class Config(BaseSettings):
         env_file_encoding="utf-8",
     )
 
+    LOG_LEVEL: str = "INFO"
+
 
 config = Config()
